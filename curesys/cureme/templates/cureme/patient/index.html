@@ -1,0 +1,53 @@
+{% include 'cureme/navbar.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insulin Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Insulin Visualization</h1>
+    <canvas id="insulinChart" width="800" height="400"></canvas>
+
+    <script>
+        var ctx = document.getElementById('insulinChart').getContext('2d');
+        var insulinData = {
+            labels: [{% for entry in insulin_data %}"{{ entry.datetime }}", {% endfor %}],
+            datasets: [{
+                label: 'Blood Sugar Level',
+                data: [{% for entry in insulin_data %}{{ entry.blood_sugar }}, {% endfor %}],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        };
+    
+        var insulinChart = new Chart(ctx, {
+            type: 'line',
+            data: insulinData,
+            options: {
+                scales: {
+                    x: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Blood Sugar Level'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    
+</body>
+</html>

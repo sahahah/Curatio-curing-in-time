@@ -1,0 +1,16 @@
+{% block content %}
+    <h2>Appointment Status</h2>
+
+    <ul>
+        {% for appointment in appointments %}
+            <li>
+                <strong>Patient Name:</strong> {{ appointment.patient_fname }} {{ appointment.patient_lname }}<br>
+                <strong>Doctor Name:</strong> {{ appointment.doctor_fname }} {{ appointment.doctor_lname }}<br>
+                <strong>Appointment Date:</strong> {{ appointment.appointment_date }}<br>
+                <strong>Condition:</strong> {{ appointment.condition }}<br>
+                <strong>Status:</strong> {{ appointment.status }}<br>
+                <!-- Add other appointment details as needed -->
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

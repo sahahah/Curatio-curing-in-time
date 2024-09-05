@@ -1,0 +1,28 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href={% static 'css/main.css' %}>
+{% include 'cureme/navbar.html' %}
+{% block content %}
+<head>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/appt.css' %}">
+</head>
+<body>
+  <br>
+  <br>
+  <br>
+  <h2><center>Book Appointment<center></h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Book Appointment</button>
+  </form>
+  <link rel="stylesheet" type="text/css" href={% static 'css/appt.css' %}>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+  $(function() {
+    // Initialize datepicker
+    $('input[type="date"]').datepicker();
+  });
+</script>
+{% endblock %}

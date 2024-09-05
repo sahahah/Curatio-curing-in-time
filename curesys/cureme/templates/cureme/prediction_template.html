@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prediction Result</title>
+    <style>
+        /* CSS styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .selected-symptoms {
+            font-weight: bold;
+            color: #007bff; /* Blue color */
+        }
+        .input-length {
+            color: #6c757d; /* Gray color */
+        }
+        .prediction {
+            color: #28a745; /* Green color */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form method="post">
+            {% csrf_token %}
+            <h2>Selected Symptoms: <span class="selected-symptoms">{{ selected_symptoms }}</span></h2>
+            <!-- <h2>Input Length: <span class="input-length">{{ inputs2 }}</span></h2> -->
+            <h2>Prediction:</h2>
+            <div class="prediction">
+                {{ prediction }}
+            </div>
+        </form>
+    </div>
+</body>
+</html>

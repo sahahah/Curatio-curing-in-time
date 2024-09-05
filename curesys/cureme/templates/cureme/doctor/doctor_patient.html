@@ -1,0 +1,25 @@
+{% include 'cureme/navbar.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctor Interface</title>
+    <!-- Add your CSS styling here -->
+</head>
+<body>
+    <h1>Welcome, Dr. {{ doctor.doctor_fname }} {{ doctor.doctor_lname }}</h1>
+    {% for patient_data in patients %}
+        <div>
+            <h2>{{ patient_data.patient.patient_fname }} {{ patient_data.patient.patient_lname }}</h2>
+            {% if patient_data.latest_bp %}
+                <p>Latest Blood Pressure: {{ patient_data.latest_bp.blood_press }} ({{ patient_data.latest_bp.datetime }})</p>
+                <p>Comments: {{ patient_data.latest_bp.comments }}</p>
+            {% else %}
+                <p>No blood pressure records available.</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <!-- Add your JavaScript for any additional functionality -->
+
+</body>
+</html>

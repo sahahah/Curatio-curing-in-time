@@ -1,0 +1,25 @@
+<!-- hospmap.html -->
+{% load static %}
+
+
+{% block content %}
+    <h2>Hospital Map</h2>
+
+    <!-- Image map with areas and links to show appointments -->
+    <div style="position: relative;">
+        <img src="{% static 'images/hospmap.png' %}" alt="Hospital Map" style="width: 100%; height: auto;">
+
+        <!-- Define the clickable areas with links to show appointments -->
+        {% for room in hospital_rooms %}
+            <!-- <a href="#" onclick="showAppointments('{{ room.room_number }}')" style="position: absolute; {{ room.coordinates }}; background: rgba(255, 0, 0, 0.3); border: 1px solid #FF0000; padding: 5px; border-radius: 5px;"></a> -->
+        {% endfor %}
+    </div>
+
+    <script>
+        function showAppointments(roomNumber) {
+            // Implement logic to display appointments for the clicked room
+            // Use the patient_appointments variable to access test appointments
+            alert('Implement logic to show appointments for room: ' + roomNumber);
+        }
+    </script>
+{% endblock %}

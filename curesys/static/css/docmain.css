@@ -1,0 +1,62 @@
+CSS CODE- save.css
+.navbar-nav {
+  margin-left: 50%; /* Pushes the buttons to the right */
+}
+
+.nav-item {
+  margin-right: 2px; /* Adjust the spacing between buttons */
+}
+
+/* Style for the buttons */
+.navbar-btn {
+ 
+  border-radius: 15px;
+  background-color: #252525;
+  color: #ffffff;
+  text-decoration: none;
+ 
+}
+
+.navbar-btn:hover {
+  background-color: #3280e6;
+}
+table {
+  width: 80%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  border: 2px solid black;
+}
+
+th, td {
+  border: 1px solid black;
+  text-align: left;
+  padding: 7px;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+td::before {
+  content: "\00a0";  /* Non-breaking space to prevent collapsing */
+  display: block;
+  height: 10px;  /* Adjust as needed */
+  border-top: 1px solid black;
+  margin-top: -1px;
+}
+
+@media only screen and (max-width: 600px) {
+  th, td {
+      display: block;
+      width: 100%;
+  }
+}
+.footer {
+  background-color: #ffffff;
+  color: #000000;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}

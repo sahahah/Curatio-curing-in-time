@@ -1,0 +1,237 @@
+{% load static %}
+{% include 'cureme/navbar.html' %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/vitals.css' %}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        .blood-pressure-card {
+            max-width: 300px; /* Adjust the width as needed */
+            
+        }
+        .card-container1{
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        }
+    </style>
+
+<body>
+
+<div class="card mx-auto" style=" margin-bottom: 200px">
+  
+    <div class="button-container">
+        
+        <button class="button" onclick="goToPage2()">Allergies</button>
+        <button class="button" onclick="goToPage3()">Immunization</button>
+        <button class="button" onclick="goToPage4()">Vitals</button>
+        <button class="button" onclick="goToPage7()">Diagnosis</button>
+        <button class="button" onclick="goToPage8()">Surgery</button>
+    </div>
+    <div class="card1 mt-3">
+        <h1>Vitals</h1>
+        <small><i>Please fill your vitals according to the reports</i></small>
+        <br>
+        <br>
+        {% block content %}
+                        <h4>Blood Pressure</h4>
+
+                        {% if blood_pressure_entries %}
+                            <h3>Existing Blood Pressure Entries:</h3>
+                            <ul>
+                            {% for entry in blood_pressure_entries %}
+                                <li>{{ entry.datetime }} - {{ entry.blood_press }} - {{ entry.comments }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No blood pressure entries yet.</p>
+                    {% endif %}
+          <div class="card-container1">
+            <div class="card blood-pressure-card">
+                <div class="card-body">
+                
+                    
+                    <p class="card-text">Enter your blood pressure:</p>
+                    
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bloodPressureModal">
+                        Fill Blood Pressure
+                    </button>
+                    
+                </div>
+            </div>
+
+            <div class="card blood-pressure-card">
+              <div class="card-body">
+               
+                    <h4>Insulin</h4>
+
+                    {% if insulin_entries %}
+                        <h3>Existing Insulin Entries:</h3>
+                        <ul>
+                        {% for entry in insulin_entries %}
+                            <li>{{ entry.datetime }} - {{ entry.insulin }} - {{ entry.comments }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No insulin entries yet.</p>
+                    {% endif %}
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insulinModal">
+                      Fill heart rate
+                  </button>
+                  <div id="heartrateResult" style="display: none;">
+                      <p class="mt-3">Your heart rate:</p>
+                      <p id="heartrateValue"></p>
+                      <a href="#" onclick="showMore('heartrate')">View More</a>
+                  </div>
+              </div>
+            </div>
+
+            <div class="card blood-pressure-card">
+              <div class="card-body">
+                  <h4>Heart Rate</h4>
+                    {% if heartrate_entries %}
+                            <h3>Existing Heart Rate Entries:</h3>
+                            <ul>
+                            {% for entry in heartrate_entries %}
+                                <li>{{ entry.datetaken }} - {{ entry.heartrate }} - {{ entry.comments }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                         <p>No heartrate entries yet.</p>
+                    {% endif %}
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bloodPressureModal">
+                      Fill Heart Rate
+                  </button>
+                  
+                </div>
+          </div>
+          
+    
+
+      <!-- <div class="card blood-pressure-card">
+        <div class="card-body">
+            <h4>Prescriptions</h4>
+                {% if prescription_entries %}
+                                <h3>Existing Prescription Entries:</h3>
+                                <ul>
+                                {% for entry in prescription_entries %}
+                                    <li>{{ entry.duration }} - {{ entry.dosage }} - {{ entry.medications }} - {{ entry.instructions }}</li>
+                                {% endfor %}
+                                </ul>
+                {% else %}
+                    <p>No prescription entries yet.</p>
+                {% endif %}
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insulinModal">
+                Fill the prescription
+            </button>
+           
+        </div> -->
+    </div>
+  </div>
+  
+    </div>
+          
+<div class="h4 pb-2 mb-4  border-bottom border-dark">
+        <div class="overlay" id="overlay"></div>
+        
+</div>
+
+<!-- Heart rate modal-->
+<div class="modal fade" id="bloodPressureModal" tabindex="-1" aria-labelledby="bloodPressureModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="bloodPressureModalLabel">Enter your Blood pressure</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+              <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Submit</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Blood Pressure Modal -->
+<div class="modal fade" id="insulinModal" tabindex="-1" aria-labelledby="bloodPressureModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bloodPressureModalLabel">Enter insulin Levels</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ insu_form.as_p }}
+                    <button type="submit">Submit</button>
+                </form> 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Heart Rate Modal -->
+<div class="modal fade" id="heartrateModal" tabindex="-1" aria-labelledby="heartrateModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="heartrateModal">Enter heartrate Levels</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ heart_form.as_p }}
+                    <button type="submit">Submit</button>
+                </form> 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Prescription Modal -->
+<div class="modal fade" id="PrescriptionModal" tabindex="-1" aria-labelledby="PrescriptionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="PrescriptionModalLabel">Enter Prescription</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ pres_form.as_p }}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="{% static 'js/vitals.js' %}"></script>
+
+
+{% endblock %}

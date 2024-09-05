@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Card</title>
+    <link rel="stylesheet" href="allergies.css"/>
+    <!-- Bootstrap CSS is included only once -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark">
+        <div class="container-fluid">
+          <h1><a class="navbar-brand text-white" href="#">CURATIO</a></h1>
+
+          <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+              <li class="nav-item ">
+                  <a class="nav-link navbar-btn text-white" href="#">Profile</a>
+                </li>
+              <li class="nav-item">
+                <a class="nav-link navbar-btn text-white" href="health.html" >My Health</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link navbar-btn text-white" href="#" >Appointments</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link navbar-btn text-white" href="#" >Hospital Map</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link navbar-btn text-white" href="#" >Reports</a>
+                </li>
+              
+              
+              
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle navbar-btn text-white" href="#" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  Dropdown
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+            </ul>
+    
+          </div>
+        </div>
+      </nav>
+      <br>
+      <br>
+
+<div class="card mx-auto" style=" margin-bottom: 200px">
+  
+    <div class="button-container">
+        
+        <button class="button" onclick="goToPage2()">Allergies</button>
+        <button class="button" onclick="goToPage3()">Immunization</button>
+        <button class="button" onclick="goToPage4()">Vitals</button>
+        <button class="button" onclick="goToPage7()">Diagonsis</button>
+        <button class="button" onclick="goToPage8()">Surgery</button>
+    </div>
+    <div class="card1 mt-3">
+        <h1>Allergies</h1>
+        <small><i>No records inserted yet <a href="#" class="custom-button1" onclick="openMedicationForm()">click here</a>
+        </i></small>
+          <div class="button-container">
+              <button class="custom-button" onclick="openMedicationForm()">Open Medication Form</button>
+          </div>
+          <br>
+          
+<div class="h4 pb-2 mb-4  border-bottom border-dark">
+        <div class="overlay" id="overlay"></div>
+        <div class="medication-form" id="medicationForm">
+            <div class="form-content">
+                <span class="close-btn" onclick="closeMedicationForm()">&times;</span>
+                
+                <form>
+                  <h2>Allergies Form</h2>
+                  
+                  <!-- Personal Information -->
+                  <label for="patientName">Patient Name:</label>
+                  <input type="text" id="patientName" name="patientName" required>
+              
+                  <label for="patientID">Patient ID:</label>
+                  <input type="text" id="patientID" name="patientID" required>
+              
+                  <!-- Allergy Information -->
+                  <label for="allergyType">Type of Allergy:</label>
+                  <select id="allergyType" name="allergyType" required>
+                      <option value="Food">Food Allergy</option>
+                      <option value="Environmental">Environmental Allergy</option>
+                      <option value="Medication">Medication Allergy</option>
+                      <!-- Add more options as needed -->
+                  </select>
+              
+                  <label for="allergen">Allergen:</label>
+                  <input type="text" id="allergen" name="allergen" required>
+              
+                  <label for="reaction">Reaction:</label>
+                  <textarea id="reaction" name="reaction" rows="3" required></textarea>
+              
+                  <!-- Additional Information -->
+                  <label for="additionalInfo">Additional Information:</label>
+                  <textarea id="additionalInfo" name="additionalInfo" rows="3"></textarea>
+              
+                  <!-- Doctor Information -->
+                  <label for="doctorName">Doctor Name:</label>
+                  <input type="text" id="doctorName" name="doctorName" required>
+              
+                  <!-- Dosage Information (if applicable) -->
+                  <label for="dosage">Dosage:</label>
+                  <input type="text" id="dosage" name="dosage">
+
+                  <button type="button" onclick="submitAllergyForm()">Submit</button>
+                  <button type="reset">Reset</button>
+              </form>
+                
+              
+          
+        </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="allergies.js"></script>
+
+</body>
+</html>

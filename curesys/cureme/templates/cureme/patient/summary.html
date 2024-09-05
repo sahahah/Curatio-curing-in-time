@@ -1,0 +1,17 @@
+{% include 'cureme/user.html' %}
+
+{% block title %}Patient Summary{% endblock %}
+
+{% block content %}
+    <h2>Summary Page Content</h2>
+    <p>User ID: {{ user.id }}</p>
+    <p>Email: {{ user.email }}</p>
+    <img class="pfp" src='{{request.patient.photo.url}}' /> 
+    <!-- Additional details from the Patient model -->
+    <p>Patient Details:</p>
+    <p>Contact Number: {{ user_pat.contact_number }}</p>
+    <p>Name: {{ user_pat.patient_fname }}</p>
+    <!-- Add more details as needed -->
+
+    <!-- Add summary content here -->
+{% endblock %}

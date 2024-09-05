@@ -1,0 +1,25 @@
+{% include 'cureme/navbar.html' %}
+
+{% block title %}Vitals{% endblock %}
+
+{% block content %}
+  <h2>Blood Pressure</h2>
+
+  {% if blood_pressure_entries %}
+    <h3>Existing Blood Pressure Entries:</h3>
+    <ul>
+      {% for entry in blood_pressure_entries %}
+        <li>{{ entry.datetime }} - {{ entry.blood_press }} - {{ entry.comments }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No blood pressure entries yet.</p>
+  {% endif %}
+
+  <h3>Add New Blood Pressure Entry:</h3>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+  </form> 
+{% endblock %}

@@ -1,0 +1,21 @@
+.navbar-nav {
+    margin-left: 68%; /* Pushes the buttons to the right */
+  }
+
+  .nav-item {
+    margin-right: 2px; /* Adjust the spacing between buttons */
+  }
+
+  /* Style for the buttons */
+  .navbar-btn {
+    
+    border-radius: 15px;
+    background-color: #252525;
+    color: #ffffff;
+    text-decoration: none;
+    
+  }
+
+  .navbar-btn:hover {
+    background-color: #3280e6;
+  }

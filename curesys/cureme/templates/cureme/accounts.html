@@ -1,0 +1,14 @@
+{% load static%}<link rel="stylesheet" type ='text/css' href = {% static '/css/navbar.css'%} />
+<h1>Welcome, {{ user.username }}</h1>
+    {% if user_sister %}
+        <h2>Sister Details:</h2>
+        <p>Sister Name: {{ user_sister.name_annuario }}</p>
+        <div class="circular-img">
+        <img src="{{ user_sister.photo.url }}" alt="Sister's Photo">
+        </div>
+        <!-- Display other sister details as needed -->
+    {% else %}
+        <p>No sister details found for this user.</p>
+    {% endif %}
+
+

@@ -1,0 +1,284 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Custom Map</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+    #map {
+      height: 780px;
+      position: relative;
+      background-color: #424242; /* Set the background color of the map */
+    }
+    .sidebar {
+      font-family: "Poppins", sans-serif; /* Apply Poppins font to the sidebar */
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      z-index: 999;
+      background-color: rgb(255, 255, 255);
+      padding: 20px;
+      border-radius: 15px;
+      width: 250px;
+      height: calc(100vh  200px); /* Increased height */
+    }
+
+    .sidebar h1 {
+      font-family: "Poppins", sans-serif; /* Apply Poppins font to the sidebar heading */
+      font-size: 30px;
+      font-weight: bold;
+      color: #69d0ff;
+      margin-bottom: 5px; /* Adjusted margin-bottom */
+    }
+    .sidebar p {
+      font-weight: 300;
+      font-style: normal;
+      margin-bottom: 0; /* Updated margin-bottom to 0 */
+    }
+
+    .sidebar-btn {
+      font-family: "Poppins", sans-serif; /* Apply Poppins font to the sidebar buttons */
+      margin-bottom: 5px;
+      cursor: pointer;
+      background-color: #ffffff;
+      border: none;
+      border-radius: 1px;
+      padding: 5px 5px;
+      font-size: 17px;
+      transition: background-color 0.3s ease;
+      width: 260px; /* Set width to 100% */
+      text-align: left; /* Align text to the left */
+    }
+    .sidebar-btn:hover {
+      background-color: #95ddff;
+    }
+    .dropdown {
+      display: none;
+      margin-top: 5px;
+    }
+    .active {
+      display: block;
+    }
+    .leaflet-control-zoom {
+      /* Hide default zoom control */
+      left: 1550px;
+    }
+    .card {
+      background-color: #dfdfdf;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(173, 173, 173, 0.1);
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .line {
+      width: 100%;
+      border-bottom: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+    .sidebar-arrow-icon {
+      position: absolute;
+      top: 2px;
+      left: 20px;
+      font-size: 4px;
+      cursor: pointer;
+      z-index: 999;
+    }
+    .styled-button {
+      background-color: #9dcdff;
+      color: #fff;
+      border: none;
+      border-radius: 100px;
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+      margin-left: 200px; /* Added margin-right to space the button from other elements */
+
+    }
+
+    .styled-button:hover {
+      background-color: #0056b3;
+      
+    }
+    /* Responsive Zoom Control */
+    @media only screen and (max-width: 768px) {
+      .leaflet-control-zoom {
+        left: auto;
+        right: 10px;
+        bottom: 10px;
+      }
+    }
+  
+    
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+    <div class="sidebar">
+        <center><h1>CURATIO</h1></center>
+
+        <p>Hospital Map</p>
+        {% if test_app_entries %}
+                            <h3>Upcoming Tests/Appointments:</h3>
+                            <ul>
+                            {% for entry in test_app_entries %}
+                                <li>{{ entry.test }} - {{ entry.appointment_date }} - {{ entry.location }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% else %}
+                         <p>No heartrate entries yet.</p>
+                         {% endif %}
+    <div class="line"></div> 
+    <br>
+    <button class="sidebar-btn" onclick="toggleDropdown('er', 80, -150, 4)">ER Room</button>
+            <div class="dropdown" id="er">
+                <div class="card">   
+                  <ul>
+                    <li>ER Triage</li>
+                    <li>Emergency Care</li>
+                    <li>ER Recovery</li>
+                </ul>
+                
+                </div>
+            </div>
+
+
+            <button class="sidebar-btn" onclick="toggleDropdown('enlab', 80, -70, 4)">Endocrinology Lab</button>
+            <div class="dropdown" id="enlab">
+                <div class="card">
+                  <ul>
+                    <li>Sample Collection</li>
+                    <li>Testing and Analysis</li>
+                    <li>Lab Results</li>
+                </ul>
+                
+                </div>
+            </div>
+
+
+            <button class="sidebar-btn" onclick="toggleDropdown('admin', 80, 0, 4)">Admin Suite</button>
+            <div class="dropdown" id="admin">
+                <div class="card">
+                <ul>
+
+                </ul>
+                </div>
+            </div>
+
+
+            <button class="sidebar-btn" onclick="toggleDropdown('surgery', 50, -50, 3.5)">Surgery Room</button>
+            <div class="dropdown" id="surgery">
+                <div class="card">
+                  <ul>
+                    <li>Preparation Area</li>
+                    <li>Surgical Theater</li>
+                    <li>Recovery Room</li>
+                </ul>
+                
+                </div>
+            </div>
+
+            
+            <button class="sidebar-btn" onclick="toggleDropdown('rehab', -20, -95, 4)">Rehabilitation Area</button>
+            <div class="dropdown" id="rehab">
+                <div class="card">
+
+                </div>
+            </div>
+
+
+            <button class="sidebar-btn" onclick="toggleDropdown('staff', -20, -40, 4)">Staff</button>
+            <div class="dropdown" id="staff">
+                <div class="card">
+
+                </div>
+            </div>
+
+
+            <button class="sidebar-btn" onclick="toggleDropdown('phy', 10, 0, 4)">Physician Office</button>
+            <div class="dropdown" id="phy">
+                <div class="card">
+
+                </div>
+            </div>
+
+
+            <button class="sidebar-btn" onclick="toggleDropdown('cons',  -40, 0, 4.2)">Consult Room</button>
+            <div class="dropdown" id="cons">
+                <div class="card">
+  
+                </div>
+            </div>
+
+            <button class="sidebar-btn" onclick="toggleDropdown('sugar',  -40, 0, 4.2)">Sugar Monitor Room</button>
+            <div class="dropdown" id="er">
+                <div class="card">
+
+                </div>
+            </div>
+
+
+            <button class="sidebar-btn" onclick="toggleDropdown('cons',  -40, 0, 4.2)">Waiting Louge</button>
+            <div class="dropdown" id="er">
+                <div class="card">
+
+                </div>
+            </div>
+
+
+            <button class="sidebar-btn" onclick="toggleDropdown('cons',  -40, 0, 4.2)">In Patient</button>
+            <div class="dropdown" id="er">
+                <div class="card">
+
+                </div>
+            </div>
+
+
+            <button class="sidebar-btn" onclick="toggleDropdown('cons',  -40, 0, 4.2)">Lab</button>
+            <div class="dropdown" id="er">
+                <div class="card">
+
+                </div>
+            </div>
+
+
+            <button class="sidebar-btn" onclick="toggleDropdown('cons',  -40, 0, 4.2)">Imaging</button>
+            <div class="dropdown" id="er">
+                <div class="card">
+
+                </div>
+        </div>
+        <button class="styled-button" onclick="goToHomepage()"> < </button> <!-- Styled button with onclick event -->
+
+    </div>
+</div>
+
+<script>
+  var map = L.map('map').setView([0, 0], 2); 
+   L.imageOverlay('{% static "images/hospmap.png" %}', [[-90, -180], [90, 180]]).addTo(map);
+   map.scrollWheelZoom.enable();
+ 
+   function toggleDropdown(dropdownId, lat, lng, zoom) {
+     var dropdown = document.getElementById(dropdownId);
+     dropdown.classList.toggle('active');
+     map.flyTo([lat, lng], zoom, {animate: true, duration: 1.0});
+   }
+   function goToHomepage() {
+     window.location.href = "your_homepage_url_here";
+   }
+ </script>
+
+</body>
+</html>
